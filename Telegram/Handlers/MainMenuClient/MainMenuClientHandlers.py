@@ -18,7 +18,7 @@ async def contacts(message):
 
 
 async def about(message):
-    about_text = 'Мы компания URBANITE! Хуле не ясно??'
+    about_text = 'Мы компания URBANITE'
     await bot.send_message(message.chat.id, about_text, reply_markup=delivery_keyboard())
 
 
@@ -27,7 +27,7 @@ async def delivery(message):
                     '• Службы доставки(по всей Украине):\n' \
                     '   - Новая почта ~ 50грн\n' \
                     '   - Justin~25-30грн\n' \
-                    '   - Messt~30-40грн\n' \
+                    '   - Meest~30-40грн\n' \
                     '• Доставка курьером по Соломенскому району🚚 - 35грн\n' \
                     '• Самовывоз(г. Киев, ул. Борщаговская 212)📦 - бесплатно'
     await bot.send_message(message.chat.id, delivery_text, reply_markup=delivery_keyboard())

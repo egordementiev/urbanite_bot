@@ -74,7 +74,7 @@ def set_post_keyboard():
     keyboard = types.InlineKeyboardMarkup(row_width=2)
     keyboard.add(types.InlineKeyboardButton(text='Новая почта', callback_data='post=новаяпочта'),
                  types.InlineKeyboardButton(text='Justin', callback_data='post=justin'),
-                 types.InlineKeyboardButton(text='Messt', callback_data='post=messt'),
+                 types.InlineKeyboardButton(text='Meest', callback_data='post=meest'),
                  types.InlineKeyboardButton(text='Курьер', callback_data='post=курьер'),
                  types.InlineKeyboardButton(text='Самовывоз', callback_data='post=самовывоз'),
                  types.InlineKeyboardButton(text='🚫 Отмена 🚫', callback_data='cancel'))
