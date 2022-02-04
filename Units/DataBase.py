@@ -1,10 +1,8 @@
-import logging
-
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
 from Units.DataBaseConfig import Base
 from abc import ABC, abstractmethod
-from Units.Shopper import Shopper
+from Units.Shopper import Shopper, Statistic
 from Units.User import User
 
 
