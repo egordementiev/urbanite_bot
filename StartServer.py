@@ -10,13 +10,13 @@ register_handlers(dp)
 
 
 # webhook settings
-WEBHOOK_HOST = 'https://71e3-188-163-75-150.ngrok.io'
+WEBHOOK_HOST = 'https://f21e-94-45-135-8.ngrok.io'
 WEBHOOK_PATH = '/'
 WEBHOOK_URL = f"{WEBHOOK_HOST}{WEBHOOK_PATH}"
 
 # webserver settings
 WEBAPP_HOST = 'localhost'  # or ip
-WEBAPP_PORT = 5000
+WEBAPP_PORT = 8443
 
 logging.basicConfig(level=logging.INFO)
 
