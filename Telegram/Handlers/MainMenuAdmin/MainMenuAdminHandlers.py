@@ -1,4 +1,4 @@
-from Telegram.Config import bot, database, dp
+from Telegram.Config import bot, database, dp, MANAGERS_IDS
 from Units.Shopper import Shopper
 from aiogram.dispatcher import FSMContext, Dispatcher
 from aiogram.dispatcher.filters.state import StatesGroup, State
@@ -13,7 +13,7 @@ def register_admin_main_handlers(dispatcher: Dispatcher):
 
 async def print_shoppers(message: Message):
     user = database.get_user(message.from_user.id)
-    if not user.is_admin:
+    if not user or user.ID in MANAGERS_IDS:
         await bot.send_message(message.chat.id, 'Эта команда доступна только администратору')
         return
 
@@ -31,7 +31,7 @@ async def print_shoppers(message: Message):
 
 async def del_shopper(message: Message):
     user = database.get_user(message.from_user.id)
-    if not user.is_admin:
+    if not user or user.ID in MANAGERS_IDS:
         await bot.send_message(message.chat.id, 'Эта команда доступна только администратору')
         return
 

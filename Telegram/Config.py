@@ -4,8 +4,8 @@ from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from Units.DataBase import SQLAlchemy
 
 
-# MANAGER_ID = '604008726'
-MANAGER_ID = '981881436'
+MANAGERS_IDS = ['981881436', '604008726']
+MANAGER_ID = MANAGERS_IDS[1]
 
 
 TOKEN = '5193197247:AAF1EkmzegWMFfMC2vnoBTCZyhtGlUvkSXc'

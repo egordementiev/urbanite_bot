@@ -1,4 +1,4 @@
-from Telegram.Config import bot, database, dp
+from Telegram.Config import bot, database, dp, MANAGERS_IDS
 from Units.Shopper import Shopper
 from aiogram.dispatcher import FSMContext, Dispatcher
 from aiogram.dispatcher.filters.state import StatesGroup, State
@@ -33,7 +33,7 @@ async def add_shopper(message: Message):
     except:
         await bot.send_message(message.chat.id, 'Произошла неизвестаня ошибка, попробуйте еще раз')
         return
-    if not user.is_admin:
+    if not user or user.ID in MANAGERS_IDS:
         await bot.send_message(message.chat.id, 'Эта функция доступная только администратору')
         return
 
