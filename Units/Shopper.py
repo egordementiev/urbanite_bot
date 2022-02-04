@@ -38,19 +38,3 @@ class Shopper(Base):
 
     def __repr__(self):
         return f'({self.ID}) {self.title}, цена: {self.price}грн | фотографии = {self.photos}'
-
-
-class Statistic(Base):
-    _tablename_ = "statistics"
-
-    ID = Column(Integer)
-    stat_name = Column(Text)
-    stat = Column(Text)
-
-    def __init__(self, ID, stat_name, stat):
-        self.ID = ID
-        self.stat_name = stat_name
-        self.stat = stat
-
-    def __repr__(self):
-        return f'({self.ID}) {self.stats_name} = {self.stat}'

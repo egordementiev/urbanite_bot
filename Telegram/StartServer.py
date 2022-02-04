@@ -1,4 +1,4 @@
-from Config import dp
+from Telegram.Config import dp
 from Telegram.Handlers import *
 
 import logging
@@ -8,8 +8,6 @@ from aiogram.utils.executor import start_webhook
 
 register_handlers(dp)
 
-
-API_TOKEN = 'BOT_TOKEN_HERE'
 
 # webhook settings
 WEBHOOK_HOST = 'https://71e3-188-163-75-150.ngrok.io'
