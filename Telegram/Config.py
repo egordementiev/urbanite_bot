@@ -15,4 +15,4 @@ dp = Dispatcher(bot, storage=storage)
 
 database = SQLAlchemy()
 
-# '604008726 - id илюхи рачка'
+# '604008726 - id rachka'

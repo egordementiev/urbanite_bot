@@ -29,11 +29,16 @@ def register_add_shopper_handlers(dispatcher: Dispatcher):
 async def add_shopper(message: Message):
     print('add_shopper')
     try:
-        user = database.get_user(message.from_user.id)
+        users = [user for user in database.get_users() if str(user.ID) ==  str(message.chat.id)]
+        print(users)
+        user = users[0]
     except:
-        await bot.send_message(message.chat.id, 'Произошла неизвестаня ошибка, попробуйте еще раз')
+        print('except')
+        await bot.send_message(message.chat.id, 'Эта функция доступная только администратору')
         return
-    if not user or user.ID in MANAGERS_IDS:
+
+    print(f'user.ID = {[str(user.ID)]}, MANAGERS_IDS = {MANAGERS_IDS}')
+    if str(user.ID) not in MANAGERS_IDS:
         await bot.send_message(message.chat.id, 'Эта функция доступная только администратору')
         return
 

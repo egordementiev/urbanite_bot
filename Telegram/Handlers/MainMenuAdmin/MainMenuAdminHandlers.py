@@ -12,8 +12,13 @@ def register_admin_main_handlers(dispatcher: Dispatcher):
 
 
 async def print_shoppers(message: Message):
-    user = database.get_user(message.from_user.id)
-    if not user or user.ID in MANAGERS_IDS:
+    try:
+        user = [user for user in database.get_users() if str(user.ID) ==  str(message.from_user.id)][0]
+    except:
+        await bot.send_message(message.chat.id, 'Эта команда доступна только администратору')
+        return
+
+    if str(user.ID) not in MANAGERS_IDS:
         await bot.send_message(message.chat.id, 'Эта команда доступна только администратору')
         return
 
@@ -30,8 +35,13 @@ async def print_shoppers(message: Message):
 
 
 async def del_shopper(message: Message):
-    user = database.get_user(message.from_user.id)
-    if not user or user.ID in MANAGERS_IDS:
+    try:
+        user = [user for user in database.get_users() if str(user.ID) ==  str(message.from_user.id)][0]
+    except:
+        await bot.send_message(message.chat.id, 'Эта команда доступна только администратору')
+        return
+
+    if str(user.ID) not in MANAGERS_IDS:
         await bot.send_message(message.chat.id, 'Эта команда доступна только администратору')
         return
 

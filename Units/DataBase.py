@@ -57,6 +57,12 @@ class SQLAlchemy(DataBase):
         session.close()
         return user
 
+    def get_users(self):
+        session = Session(self.engine)
+        users = session.query(User).all()
+        session.close()
+        return users
+
     def add_shopper(self, shopper: Shopper):
         session = Session(self.engine)
         # try:
