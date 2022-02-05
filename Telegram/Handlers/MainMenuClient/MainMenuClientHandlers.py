@@ -150,3 +150,17 @@ async def empty_cart(message: Message, user_id: int):
     user = database.get_user(user_id)
     user.cart = []
     database.update_user(user)
+
+
+async def my_id(message: Message):
+    await bot.send_message(message.chat.id, f'id чата = {message.chat.id}')
+
+
+async def my_status(message: Message):
+    try:
+        user = [user for user in database.get_users() if str(user.ID) == str(message.from_user.id)][0]
+    except:
+        await bot.send_message(message.chat.id, 'Вас не найденно в датабазе, напишите боту команду /start')
+        return
+
+    await bot.send_message(message.chat.id, f'Ваш пользователь = {user}')

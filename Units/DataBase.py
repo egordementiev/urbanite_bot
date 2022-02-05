@@ -29,7 +29,7 @@ class DataBase(ABC):
 
 
 class SQLAlchemy(DataBase):
-    def __init__(self, port='5432', host='localhost', password='123', dbname='postgres', user='postgres'):
+    def __init__(self, port='5432', host='localhost', password='fagSxElh3f2c5_', dbname='postgres', user='postgres'):
         self.engine = create_engine(f'postgresql://{user}:{password}@{host}:{port}/{dbname}')
         Base.metadata.create_all(self.engine)
 
@@ -46,6 +46,7 @@ class SQLAlchemy(DataBase):
     def update_user(self, user: User):
         session = Session(self.engine)
         old_user = session.query(User).filter_by(ID=user.ID).first()
+        print(old_user)
         old_user.cart = user.cart
         old_user.is_admin = user.is_admin
         print(session.dirty)

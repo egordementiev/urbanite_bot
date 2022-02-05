@@ -13,6 +13,8 @@ def register_handlers(dispatcher: Dispatcher):
     dispatcher.register_message_handler(delivery, commands=['delivery'])
     dispatcher.register_message_handler(catalog, commands=['shop', 'catalog'])
     dispatcher.register_message_handler(cart, commands=['cart'])
+    dispatcher.register_message_handler(my_id, commands=['id'])
+    dispatcher.register_message_handler(my_status, commands=['status'])
     dispatcher.register_message_handler(add_shopper, commands=['addshopper'], state='*')
     register_add_shopper_handlers(dispatcher)
     register_checkout_handlers(dispatcher)
