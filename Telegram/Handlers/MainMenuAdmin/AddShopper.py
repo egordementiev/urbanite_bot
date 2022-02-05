@@ -17,6 +17,7 @@ class AddShopperStates(StatesGroup):
 
 def register_add_shopper_handlers(dispatcher: Dispatcher):
     print('register_add_shopper_handlers')
+    dispatcher.register_message_handler(add_shopper, commands=['addshopper'], state='*')
     dispatcher.register_message_handler(set_name, state=AddShopperStates.set_name)
     dispatcher.register_message_handler(set_description, state=AddShopperStates.set_description)
     dispatcher.register_message_handler(set_material, state=AddShopperStates.set_material)

@@ -16,7 +16,7 @@ def register_admin_main_handlers(dispatcher: Dispatcher):
 
 async def print_shoppers(message: Message):
     try:
-        user = [user for user in database.get_users() if str(user.ID) ==  str(message.from_user.id)][0]
+        user = [user for user in database.get_users() if str(user.ID) == str(message.from_user.id)][0]
     except:
         await bot.send_message(message.chat.id, 'Эта команда доступна только администратору')
         return
