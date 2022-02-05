@@ -1,7 +1,6 @@
 from Telegram.Config import bot, database
 from Telegram.Keyboards.Keyboards import *
 from Units.User import User
-from telebot import types
 
 
 def is_admin(_id):
