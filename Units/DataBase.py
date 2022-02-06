@@ -78,9 +78,13 @@ class SQLAlchemy(DataBase):
 
     def update_shopper(self, shopper: Shopper):
         session = Session(self.engine)
-        old_user = session.query(User).filter_by(ID=shopper.ID).first()
-        session.delete(old_user)
-        session.add(shopper)
+        old_shopper = session.query(Shopper).filter_by(ID=shopper.ID).first()
+        print(f'old user = {old_shopper}')
+        old_shopper.title = shopper.title
+        old_shopper.description = shopper.description
+        old_shopper.material = shopper.material
+        old_shopper.price = shopper.price
+        old_shopper.photos = shopper.photos
         print(session.dirty)
         session.commit()
         session.close()

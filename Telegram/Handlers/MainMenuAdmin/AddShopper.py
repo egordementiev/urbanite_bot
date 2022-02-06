@@ -149,7 +149,7 @@ async def next_img(message: Message, state: FSMContext):
     await state.update_data(shopper=shopper)
 
     await bot.send_message(message.chat.id, 'Фото успешно добавленно, отправьте следующее:',
-                           reply_markup=add_shopper_keyboard())
+                           reply_markup=cancel_keyboard())
 
 
 async def save_shopper(message: Message, state: FSMContext):
