@@ -21,7 +21,9 @@ async def contacts(message):
 
 @dp.throttled(anti_flood, rate=anti_flood_rate)
 async def about(message):
-    about_text = 'Мы компания URBANITE'
+    about_text = 'Мы компания из Киева, наша цель - делать людей счастливыми. ' \
+                 'Наши товары это: удобство, стиль и простота. Для нас, ' \
+                 'главный показатель - качество продукции, а главная мотивация - счасливые клиенты.'
     await bot.send_message(message.chat.id, about_text, reply_markup=delivery_keyboard())
 
 

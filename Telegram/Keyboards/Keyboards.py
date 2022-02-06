@@ -79,3 +79,9 @@ def set_post_keyboard():
                  types.InlineKeyboardButton(text='Самовывоз', callback_data='post=самовывоз'),
                  types.InlineKeyboardButton(text='🚫 Отмена 🚫', callback_data='cancel'))
     return keyboard
+
+
+def checkout_false_keyboard():
+    keyboard = types.InlineKeyboardMarkup(row_width=3)
+    keyboard.add(types.InlineKeyboardButton(text='Найти себе шоппер', callback_data='catalog'))
+    return keyboard

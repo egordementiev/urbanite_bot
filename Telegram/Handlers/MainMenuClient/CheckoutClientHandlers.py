@@ -1,4 +1,4 @@
-from Telegram.Config import bot, database, MANAGER_ID
+from Telegram.Config import bot, database, MANAGER_ID, anti_flood, anti_flood_rate, dp
 from Telegram.Keyboards.Keyboards import *
 from aiogram.types import InputMedia, InputMediaPhoto, Message
 from aiogram.dispatcher.filters.state import State, StatesGroup
@@ -41,10 +41,17 @@ def register_checkout_handlers(dispatcher: Dispatcher):
     dispatcher.register_message_handler(checkout_post_address, state=CheckoutStates.post_courier)
 
 
+@dp.throttled(anti_flood, rate=anti_flood_rate)
 async def checkout_init(message: Message, state: FSMContext, user_id):
+    user = database.get_user(user_id)
+    if not user or len(user.cart) < 1:
+        await bot.send_message(message.chat.id, 'Ваша корзину пуста, пожалуйста, перед'
+                                                ' закакзом добавьте товары в корзину',
+                               reply_markup=checkout_false_keyboard())
+        return
+
     await bot.send_message(message.chat.id, 'Введите ваш номер телефона:', reply_markup=cancel_keyboard())
     await CheckoutStates.first()
-    user = database.get_user(user_id)
     checkout = Checkout(user)
     await state.update_data(checkout=checkout)
 

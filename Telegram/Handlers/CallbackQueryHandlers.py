@@ -8,6 +8,9 @@ async def callback_handlers(call: CallbackQuery, state: FSMContext):
     if call.data in ['contacts']:
         await contacts(call.message)
 
+    elif call.data in ['catalog']:
+        await catalog(call.message)
+
     elif call.data.startswith('add_to_cart_id_'):
         pass
 
