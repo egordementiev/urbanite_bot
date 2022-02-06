@@ -1,9 +1,11 @@
-from Telegram.Config import bot, database
+from Telegram.Config import bot, database, anti_flood, anti_flood_rate, dp
 from Telegram.Keyboards.Keyboards import *
+from Units.User import User
 from aiogram.types import InputMedia, InputMediaPhoto, Message
 from aiogram.dispatcher.storage import FSMContext
 
 
+@dp.throttled(anti_flood, rate=anti_flood_rate)
 async def contacts(message):
     contacts_text = 'Наши Контакты:\n\n' \
                     'C нами можно связаться несколькими способами:\n' \
@@ -17,11 +19,13 @@ async def contacts(message):
     await bot.send_message(message.chat.id, contacts_text, reply_markup=contacts_keyboard())
 
 
+@dp.throttled(anti_flood, rate=anti_flood_rate)
 async def about(message):
     about_text = 'Мы компания URBANITE'
     await bot.send_message(message.chat.id, about_text, reply_markup=delivery_keyboard())
 
 
+@dp.throttled(anti_flood, rate=anti_flood_rate)
 async def delivery(message):
     delivery_text = 'Доставка📨:\n' \
                     '• Службы доставки(по всей Украине):\n' \
@@ -33,6 +37,7 @@ async def delivery(message):
     await bot.send_message(message.chat.id, delivery_text, reply_markup=delivery_keyboard())
 
 
+@dp.throttled(anti_flood, rate=anti_flood_rate)
 async def catalog(message):
     shoppers = database.get_shoppers()
     if len(shoppers) < 1:
@@ -45,6 +50,7 @@ async def catalog(message):
                          reply_markup=shopper_keyboard(0, shopper.ID))
 
 
+@dp.throttled(anti_flood, rate=anti_flood_rate)
 async def slide_shopper_left(message: Message, ID: int):
     print(message)
     shoppers = database.get_shoppers()
@@ -75,6 +81,7 @@ async def slide_shopper_left(message: Message, ID: int):
                                      reply_markup=shopper_keyboard(ID, shopper.ID))
 
 
+@dp.throttled(anti_flood, rate=anti_flood_rate)
 async def slide_shopper_right(message: Message, ID: int):
     print(message)
     shoppers = database.get_shoppers()
@@ -107,6 +114,7 @@ async def slide_shopper_right(message: Message, ID: int):
     # await bot.send_photo(message.chat.id, photo=shopper.photos[0])
 
 
+@dp.throttled(anti_flood, rate=anti_flood_rate)
 async def more_photo(message: Message, ID: int):
     shoppers = database.get_shoppers()
     if len(shoppers) <= ID:
@@ -122,40 +130,51 @@ async def more_photo(message: Message, ID: int):
     await bot.send_media_group(media=media, chat_id=message.chat.id)
 
 
-async def add_to_cart(message: Message, ID: int):
-    user = database.get_user(message.from_user.id)
+@dp.throttled(anti_flood, rate=anti_flood_rate)
+async def add_to_cart(user_id: int, ID: int):
+    user = database.get_user(user_id)
     if not user:
-        database.get_user(message.from_user.id)
-        user = database.get_user(message.from_user.id)
+        database.add_user(User(user_id, [], False))
+        user = database.get_user(user_id)
+
     user.cart.append(ID)
     database.update_user(user)
 
 
+@dp.throttled(anti_flood, rate=anti_flood_rate)
 async def cart(message: Message):
     user = database.get_user(message.from_user.id)
     cart = user.cart
     cost = 0
     for shopper_id in cart:
-        shopper = [shopper for shopper in database.get_shoppers() if shopper.ID == shopper_id][0]
+        try:
+            shopper = [shopper for shopper in database.get_shoppers() if shopper.ID == shopper_id][0]
+        except:
+            user.cart.remove(shopper_id)
+            database.update_user(user)
+            continue
         print(f'shopper_id = {shopper_id} | shopper = {shopper}')
         cost += int(shopper.price)
         await bot.send_photo(chat_id=message.chat.id, photo=shopper.photos[0], caption=shopper.render_big_profile())
 
     await bot.send_message(message.chat.id, f'⬆️ Ваша кориза ⬆️\n'
-                                            f'   Товаров 👜: {len(cart)}(шт)\n'
+                                            f'   Товаров 👜: {len(user.cart)}(шт)\n'
                                             f'   Сумма 💵: {cost}грн', reply_markup=cart_keyboard(message.from_user.id))
 
 
+@dp.throttled(anti_flood, rate=anti_flood_rate)
 async def empty_cart(message: Message, user_id: int):
     user = database.get_user(user_id)
     user.cart = []
     database.update_user(user)
 
 
+@dp.throttled(anti_flood, rate=anti_flood_rate)
 async def my_id(message: Message):
     await bot.send_message(message.chat.id, f'id чата = {message.chat.id}')
 
 
+@dp.throttled(anti_flood, rate=anti_flood_rate)
 async def my_status(message: Message):
     try:
         user = [user for user in database.get_users() if str(user.ID) == str(message.from_user.id)][0]

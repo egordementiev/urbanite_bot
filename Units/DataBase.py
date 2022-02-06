@@ -4,6 +4,7 @@ from Units.DataBaseConfig import Base
 from abc import ABC, abstractmethod
 from Units.Shopper import Shopper
 from Units.User import User
+from typing import Union
 
 
 class DataBase(ABC):
@@ -52,9 +53,12 @@ class SQLAlchemy(DataBase):
         print(session.dirty)
         session.commit()
 
-    def get_user(self, ID: int) -> User:
+    def get_user(self, ID: int) -> Union[User, None]:
         session = Session(self.engine)
-        user = session.query(User).filter(ID == ID).one()
+        try:
+            user = [user for user in self.get_users() if user.ID == ID][0]
+        except IndexError:
+            return None
         session.close()
         return user
 
@@ -66,15 +70,15 @@ class SQLAlchemy(DataBase):
 
     def add_shopper(self, shopper: Shopper):
         session = Session(self.engine)
-        # try:
-        print(shopper)
-        session.add(shopper)
-        session.commit()
-        # except Exception as e:
-        #     print(e)
-        #     return False
-        # finally:
-        #     session.close()
+        try:
+            print(shopper)
+            session.add(shopper)
+            session.commit()
+        except Exception as e:
+            print(e)
+            return False
+        finally:
+            session.close()
 
     def update_shopper(self, shopper: Shopper):
         session = Session(self.engine)
@@ -95,9 +99,12 @@ class SQLAlchemy(DataBase):
         session.commit()
         session.close()
 
-    def get_shopper(self, ID: int) -> Shopper:
+    def get_shopper(self, ID: int) -> Union[Shopper, None]:
         session = Session(self.engine)
-        shopper = session.query(Shopper).filter(ID == ID).first()
+        try:
+            shopper = [shopper for shopper in session.query(Shopper).all() if shopper == ID][0]
+        except IndexError:
+            return None
         session.close()
         return shopper
 

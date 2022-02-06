@@ -1,9 +1,10 @@
 from Telegram.Handlers.MainMenuClient.MainMenuClientHandlers import *
 from Telegram.Handlers.MainMenuClient.CheckoutClientHandlers import *
 from Telegram.Handlers.MainMenuAdmin.AddShopper import *
+from aiogram.types import CallbackQuery
 
 
-async def callback_handlers(call, state: FSMContext):
+async def callback_handlers(call: CallbackQuery, state: FSMContext):
     if call.data in ['contacts']:
         await contacts(call.message)
 
@@ -32,7 +33,7 @@ async def callback_handlers(call, state: FSMContext):
         ID = int(call.data.split('=')[-1])
         print(f'ID = {ID}')
         await bot.answer_callback_query(call.id, 'Добавлено в корзину')
-        await add_to_cart(call.message, ID)
+        await add_to_cart(call.from_user.id, ID)
 
     elif call.data.startswith('empty_cart_id'):
         ID = int(call.data.split('=')[-1])
