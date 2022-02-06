@@ -54,7 +54,7 @@ class SQLAlchemy(DataBase):
 
     def get_user(self, ID: int) -> User:
         session = Session(self.engine)
-        user = session.query(User).filter(ID == ID).first()
+        user = session.query(User).filter(ID == ID).one()
         session.close()
         return user
 

@@ -14,17 +14,5 @@ class User(Base):
         self.cart = cart
         self.is_admin = is_admin
 
-    def get_id(self):
-        return self.ID
-
-    def get_cart(self):
-        return self.cart
-
-    def get_is_admin(self):
-        return self.is_admin
-
-    def set_cart(self, cart):
-        self.cart = cart
-
     def __repr__(self):
         return f'({self.ID}) cart = {self.cart}, is_admin = {self.is_admin}'
