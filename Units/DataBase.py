@@ -46,6 +46,7 @@ class SQLAlchemy(DataBase):
 
     def update_user(self, user: User):
         session = Session(self.engine)
+        print(session.query(User).filter(User.ID == user.ID).all())
         old_user = session.query(User).filter_by(ID=user.ID).first()
         print(old_user)
         old_user.cart = user.cart
@@ -56,8 +57,10 @@ class SQLAlchemy(DataBase):
     def get_user(self, ID: int) -> Union[User, None]:
         session = Session(self.engine)
         try:
-            user = [user for user in self.get_users() if user.ID == ID][0]
-        except IndexError:
+            print(session.query(User).filter_by(ID=ID).all())
+            user = session.query(User).filter_by(ID=ID).first()
+            print(user)
+        except:
             return None
         session.close()
         return user
@@ -102,8 +105,10 @@ class SQLAlchemy(DataBase):
     def get_shopper(self, ID: int) -> Union[Shopper, None]:
         session = Session(self.engine)
         try:
-            shopper = [shopper for shopper in session.query(Shopper).all() if shopper == ID][0]
-        except IndexError:
+            print(session.query(Shopper).filter_by(ID=ID).all())
+            shopper = session.query(Shopper).filter_by(ID=ID).first()
+            print(shopper)
+        except:
             return None
         session.close()
         return shopper

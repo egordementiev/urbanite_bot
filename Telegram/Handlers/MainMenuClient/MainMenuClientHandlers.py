@@ -148,16 +148,23 @@ async def cart(message: Message):
     user = database.get_user(message.from_user.id)
     cart = user.cart
     cost = 0
+    print(f'-- user = {database.get_user(message.from_user.id)}')
     for shopper_id in cart:
-        try:
-            shopper = [shopper for shopper in database.get_shoppers() if shopper.ID == shopper_id][0]
-        except:
+        print(shopper_id)
+        shopper = database.get_shopper(shopper_id)
+        print(shopper)
+        if not shopper:
             user.cart.remove(shopper_id)
             database.update_user(user)
             continue
         print(f'shopper_id = {shopper_id} | shopper = {shopper}')
         cost += int(shopper.price)
         await bot.send_photo(chat_id=message.chat.id, photo=shopper.photos[0], caption=shopper.render_big_profile())
+
+    print(f'-- user = {database.get_user(message.from_user.id)}')
+    if len(user.cart) < 1:
+        await bot.send_message(message.chat.id, 'Ваша корзина пуста :(', reply_markup=checkout_false_keyboard())
+        return
 
     await bot.send_message(message.chat.id, f'⬆️ Ваша кориза ⬆️\n'
                                             f'   Товаров 👜: {len(user.cart)}(шт)\n'
@@ -169,6 +176,8 @@ async def empty_cart(message: Message, user_id: int):
     user = database.get_user(user_id)
     user.cart = []
     database.update_user(user)
+    await bot.edit_message_text('Корзина очищена', message.chat.id, message.message_id,
+                                reply_markup=checkout_false_keyboard())
 
 
 @dp.throttled(anti_flood, rate=anti_flood_rate)
