@@ -2,8 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
 from Units.DataBaseConfig import Base
 from abc import ABC, abstractmethod
-from Units.Shopper import Shopper
-from Units.User import User
+from Units import *
 from typing import Union
 
 
@@ -60,7 +59,8 @@ class SQLAlchemy(DataBase):
             print(session.query(User).filter_by(ID=ID).all())
             user = session.query(User).filter_by(ID=ID).first()
             print(user)
-        except:
+        except Exception as e:
+            print(e)
             return None
         session.close()
         return user
@@ -118,3 +118,39 @@ class SQLAlchemy(DataBase):
         shoppers = session.query(Shopper).all()
         session.close()
         return shoppers
+
+    def add_stat(self, stat):
+        session = Session(self.engine)
+        try:
+            print(stat)
+            session.add(stat)
+            session.commit()
+        except Exception as e:
+            print(e)
+            return False
+        finally:
+            session.close()
+
+    def update_stat(self, stat: Stat):
+        session = Session(self.engine)
+        old_stat = session.query(Stat).filter_by(ID=stat.ID).first()
+        print(f'old_stat = {old_stat}')
+        print(f'new_stat = {stat}')
+        old_stat.title = stat.title
+        old_stat.users = stat.users
+        session.commit()
+        session.close()
+
+    def get_stat_by_title(self, title):
+        session = Session(self.engine)
+        print(session.query(Stat).filter_by(title=title).all())
+        shopper = session.query(Stat).filter_by(title=title).first()
+        print(shopper)
+        session.close()
+        return shopper
+
+    def get_stats(self):
+        session = Session(self.engine)
+        stats = session.query(Stat).all()
+        session.close()
+        return stats

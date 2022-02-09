@@ -1,9 +1,6 @@
-from Telegram.Config import bot, database, dp, MANAGERS_IDS
-from Units.Shopper import Shopper
+from Telegram.Config import bot, database, MANAGERS_IDS
 from aiogram.dispatcher import FSMContext, Dispatcher
-from aiogram.dispatcher.filters.state import StatesGroup, State
 from aiogram.types import Message, InputMediaPhoto, MediaGroup
-from Telegram.Keyboards.Keyboards import *
 
 
 def register_admin_main_handlers(dispatcher: Dispatcher):
@@ -12,6 +9,7 @@ def register_admin_main_handlers(dispatcher: Dispatcher):
     dispatcher.register_message_handler(add_admin, commands=['addadmin'])
     dispatcher.register_message_handler(delete_admin, commands=['deleteadmin'])
     dispatcher.register_message_handler(print_users, commands=['users'])
+    dispatcher.register_message_handler(get_stats, commands=['stats'])
 
 
 async def print_shoppers(message: Message):
@@ -146,3 +144,24 @@ async def print_users(message):
         msg += f'{user}\n'
 
     await bot.send_message(message.chat.id, msg)
+
+
+async def get_stats(message):
+    user = database.get_user(message.from_user.id)
+    print(user)
+
+    if not user:
+        await bot.send_message(message.chat.id, 'Эта команда доступна только администратору')
+        return
+
+    if not user.is_admin:
+        await bot.send_message(message.chat.id, 'Эта команда доступна только администратору')
+        return
+
+    stats = database.get_stats()
+
+    msg = ''
+    for stat in stats:
+        msg += f'{    stat}\n'
+
+    await bot.send_message(message.chat.id, f'Статистика переходов:\n{msg}')
