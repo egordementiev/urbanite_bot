@@ -52,7 +52,6 @@ async def catalog(message):
                          reply_markup=shopper_keyboard(0, shopper.ID))
 
 
-@dp.throttled(anti_flood, rate=anti_flood_rate)
 async def slide_shopper_left(message: Message, ID: int):
     print(message)
     shoppers = database.get_shoppers()
@@ -83,7 +82,6 @@ async def slide_shopper_left(message: Message, ID: int):
                                      reply_markup=shopper_keyboard(ID, shopper.ID))
 
 
-@dp.throttled(anti_flood, rate=anti_flood_rate)
 async def slide_shopper_right(message: Message, ID: int):
     print(message)
     shoppers = database.get_shoppers()
