@@ -90,8 +90,8 @@ async def checkout_set_post(call, state: FSMContext):
         await bot.send_message(call.message.chat.id, 'Введите номер отделения Justin:',
                                reply_markup=cancel_keyboard())
         await CheckoutStates.post_courier.set()
-    elif post == 'messt':
-        await bot.send_message(call.message.chat.id, 'Введите номер отделения Messt:',
+    elif post == 'meest':
+        await bot.send_message(call.message.chat.id, 'Введите номер отделения Meest:',
                                reply_markup=cancel_keyboard())
         await CheckoutStates.post_courier.set()
     elif post == 'курьер':
