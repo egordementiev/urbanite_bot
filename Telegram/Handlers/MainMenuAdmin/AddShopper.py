@@ -30,7 +30,7 @@ def register_add_shopper_handlers(dispatcher: Dispatcher):
 async def add_shopper(message: Message):
     print('add_shopper')
     try:
-        users = [user for user in database.get_users() if str(user.ID) ==  str(message.chat.id)]
+        users = [user for user in database.get_users() if str(user.ID) == str(message.chat.id)]
         print(users)
         user = users[0]
     except:

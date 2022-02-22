@@ -1,9 +1,12 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
-from Units.DataBaseConfig import Base
 from abc import ABC, abstractmethod
-from Units import *
+from Units.Shopper import Shopper
+from Units.User import User
+from Units.SiteUser import SiteUser
+from Units.Stat import Stat
 from typing import Union
+from Units.DataBaseConfig import Base
 
 
 class DataBase(ABC):
@@ -27,9 +30,13 @@ class DataBase(ABC):
     def del_shopper(self, shopper: Shopper):
         pass
 
+    @abstractmethod
+    def get_site_user(self, ID: int):
+        pass
+
 
 class SQLAlchemy(DataBase):
-    def __init__(self, port='5432', host='localhost', password='123', dbname='postgres', user='postgres'):
+    def __init__(self, port='5434', host='localhost', password='123', dbname='postgres', user='postgres'):
         self.engine = create_engine(f'postgresql://{user}:{password}@{host}:{port}/{dbname}')
         Base.metadata.create_all(self.engine)
 
@@ -66,6 +73,43 @@ class SQLAlchemy(DataBase):
         return user
 
     def get_users(self):
+        session = Session(self.engine)
+        users = session.query(User).all()
+        session.close()
+        return users
+
+    def add_site_user(self, site_user: SiteUser):
+        session = Session(self.engine)
+        try:
+            session.add(site_user)
+            session.commit()
+        except:
+            return False
+        finally:
+            session.close()
+
+    def update_site_user(self, site_user: SiteUser):
+        session = Session(self.engine)
+        print(session.query(User).filter(User.ID == site_user.ID).all())
+        old_site_user = session.query(User).filter_by(ID=site_user.ID).first()
+        print(old_site_user)
+        old_site_user.email = site_user.email
+        print(session.dirty)
+        session.commit()
+
+    def get_site_user(self, ID: int) -> Union[SiteUser, None]:
+        session = Session(self.engine)
+        try:
+            print(session.query(User).filter_by(ID=ID).all())
+            user = session.query(User).filter_by(ID=ID).first()
+            print(user)
+        except Exception as e:
+            print(e)
+            return None
+        session.close()
+        return user
+
+    def get_site_users(self) -> list:
         session = Session(self.engine)
         users = session.query(User).all()
         session.close()

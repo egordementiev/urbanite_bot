@@ -164,7 +164,7 @@ async def cart(message: Message):
         await bot.send_message(message.chat.id, 'Ваша корзина пуста :(', reply_markup=checkout_false_keyboard())
         return
 
-    await bot.send_message(message.chat.id, f'⬆️ Ваша кориза ⬆️\n'
+    await bot.send_message(message.chat.id, f'⬆️ Ваша корзина ⬆️\n'
                                             f'   Товаров 👜: {len(user.cart)}(шт)\n'
                                             f'   Сумма 💵: {cost}грн', reply_markup=cart_keyboard(message.from_user.id))
 

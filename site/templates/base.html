@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<!-- Кодировка веб-страницы -->
+	<meta charset="utf-8">
+	<!-- Настройка viewport -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!-- Bootstrap CSS (jsDelivr CDN) -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+	<title>URBANITE</title>
+</head>
+<body>
+
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<div class="container">
+			<a class="navbar-brand" href="#">URBANITE</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			  <span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			  <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+			    <li class="nav-item">
+			      {% if active == "home" %} <a class="nav-link active" aria-current="page" href="/home">Главная</a>
+			      {% else %} <a class="nav-link" aria-current="page" href="/home">Главная</a>{% endif %}
+			    </li>
+			    <li class="nav-item">
+			      {% if active == "catalog" %} <a class="nav-link active" aria-current="page" href="/catalog">Каталог</a>
+			      {% else %} <a class="nav-link" aria-current="page" href="/catalog">Каталог</a>{% endif %}
+			    </li>
+			    <li class="nav-item">
+			      {% if active == "cart" %} <a class="nav-link active" aria-current="page" href="/cart">Корзина</a>
+			      {% else %} <a class="nav-link" aria-current="page" href="/cart">Корзина</a>{% endif %}
+			    </li>
+			    <li class="nav-item dropdown">
+			      </a>
+			      {% if active == "faq" %} 
+			      	<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Частые вопросы</a>
+			      {% else %} 
+			      	<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Частые вопросы</a> 
+			      {% endif %}
+			      <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+			        <li><a class="dropdown-item" href="#">Вопрос 1</a></li>
+			        <li><a class="dropdown-item" href="#">Вопрос 2</a></li>
+			        <li><a class="dropdown-item" href="#">Вопрос 3</a></li>
+			        <li><hr class="dropdown-divider"></li>
+			      </ul>
+			    </li>
+			  </ul>
+			  <form class="d-flex" action="/catalog">
+			    <input class="form-control me-2" id="search" type="search" placeholder="Search" aria-label="Search">
+			    <button class="btn btn-outline-success" type="submit">Search</button>
+			  </form>
+			</div>
+		</div>
+	</nav>
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-sm-pull-12 col-md-pull-12 col-lg-pull-12">
+				<div class="card">
+					<div class="shopper-img-mini-catalog">
+						<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+						  <div class="carousel-indicators">
+						    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+						    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+						    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+						  </div>
+						  <div class="carousel-inner">
+						    <div class="carousel-item active">
+						      <img src="../static/images/shopper-2.jpg" class="d-block card-img-top" alt="...">
+						    </div>
+						    <div class="carousel-item">
+						      <img src="../static/images/shopper_more_photo-1.jpg" class="d-block card-img-top" alt="...">
+						    </div>
+						    <div class="carousel-item">
+						      <img src="../static/images/shopper_more_photo-2.jpg" class="d-block card-img-top" alt="...">
+						    </div>
+						  </div>
+						  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+						    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+						    <span class="visually-hidden">Previous</span>
+						  </button>
+						  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+						    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+						    <span class="visually-hidden">Next</span>
+						  </button>
+						</div>
+					</div>
+					<div class="card-body">
+						<h4 class="cart-title">{{popular_shopper.title}}</h4>
+						<ul class="list-group list-group-flush">
+							<li class="list-group-item">
+								<p class="card-text">Описание: {{popular_shopper.description}}</p>
+							</li>
+							<li class="list-group-item"><p class="card-text">Материал: {{popular_shopper.material}}</p></li>
+							<li class="list-group-item"><p class="card-text">Размер: (35х41 см) 135 г/кв.м</p></li>
+							<li class="list-group-item"><p class="card-text">Цена: {{popular_shopper.price}}грн</p></li>
+						</ul>
+						<button class="btn btn-primary" style="width: 100%;">
+							<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-basket2" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+						  	<path fill-rule="evenodd" d="M1.111 7.186A.5.5 0 0 1 1.5 7h13a.5.5 0 0 1 .489.605l-1.5 7A.5.5 0 0 1 13 15H3a.5.5 0 0 1-.489-.395l-1.5-7a.5.5 0 0 1 .1-.42zM2.118 8l1.286 6h9.192l1.286-6H2.118z"/>
+						  	<path fill-rule="evenodd" d="M11.314 1.036a.5.5 0 0 1 .65.278l2 5a.5.5 0 1 1-.928.372l-2-5a.5.5 0 0 1 .278-.65zm-6.628 0a.5.5 0 0 0-.65.278l-2 5a.5.5 0 1 0 .928.372l2-5a.5.5 0 0 0-.278-.65z"/>
+						  	<path d="M4 10a1 1 0 0 1 2 0v2a1 1 0 1 1-2 0v-2zm3 0a1 1 0 0 1 2 0v2a1 1 0 1 1-2 0v-2zm3 0a1 1 0 0 1 2 0v2a1 1 0 1 1-2 0v-2zM0 6.5A.5.5 0 0 1 .5 6h15a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H.5a.5.5 0 0 1-.5-.5v-1z"/>
+							</svg> В корзину
+						</button>
+					</div>
+				</div>
+			</div>
+			{% block content %}{% endblock %}
+		</div>
+	</div>
+
+	<!-- Bootstrap Bundle JS (jsDelivr CDN) -->
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+	<script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+</body>
+</html>
