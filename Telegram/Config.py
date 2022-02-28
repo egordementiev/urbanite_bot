@@ -8,7 +8,7 @@ MANAGERS_IDS = ['981881436', '604008726']
 MANAGER_ID = MANAGERS_IDS[1]
 
 
-TOKEN = '5193197247:AAF1EkmzegWMFfMC2vnoBTCZyhtGlUvkSXc'
+TOKEN = 'TOKEN'
 bot = Bot(TOKEN)
 storage = MemoryStorage()
 dp = Dispatcher(bot, storage=storage)
