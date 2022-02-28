@@ -21,5 +21,3 @@ async def anti_flood(*args, **kwargs):
 
 
 database = SQLAlchemy()
-
-# '604008726 - id rachka'
