@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xs-pull-12 col-xs-push-12 col-sm-pull-12 col-md-pull-12 col-lg-pull-12">
+	<div class="row">
+		<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>
+		<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+			<center>
+				<h4>Регистрация</h4>
+				{% if message %}
+					<h5 class="text-center">{{ message }}</h5>
+				{% endif %}
+				<form method="POST">
+				  <div class="form-floating mb-3">
+					  <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com">
+					  <label for="email">Email address</label>
+					</div>
+					<div class="form-floating mb-3">
+					  <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+					  <label for="password">Password</label>
+					</div>
+					<div class="form-floating mb-3">
+					  <input type="password" class="form-control" id="confirm-password" name="confirm-password" placeholder="Confirm Password">
+					  <label for="confirm-password">Password</label>
+					</div>
+				  <button type="submit" class="btn btn-primary" style="margin-top: 10px;">Submit</button>
+				</form>
+			</center>
+		</div>
+	</div>
+</div>
+{% endblock %}

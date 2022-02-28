@@ -100,18 +100,32 @@ class SQLAlchemy(DataBase):
     def get_site_user(self, ID: int) -> Union[SiteUser, None]:
         session = Session(self.engine)
         try:
-            print(session.query(User).filter_by(ID=ID).all())
-            user = session.query(User).filter_by(ID=ID).first()
+            print(session.query(SiteUser).filter_by(ID=ID).all())
+            user = session.query(SiteUser).filter_by(ID=ID).first()
             print(user)
         except Exception as e:
             print(e)
+            session.close()
+            return None
+        session.close()
+        return user
+
+    def get_site_user_by_email(self, email: str) -> Union[SiteUser, None]:
+        session = Session(self.engine)
+        try:
+            print(session.query(SiteUser).filter_by(email=email).all())
+            user = session.query(SiteUser).filter_by(email=email).first()
+            print(user)
+        except Exception as e:
+            print(e)
+            session.close()
             return None
         session.close()
         return user
 
     def get_site_users(self) -> list:
         session = Session(self.engine)
-        users = session.query(User).all()
+        users = session.query(SiteUser).all()
         session.close()
         return users
 
@@ -157,7 +171,7 @@ class SQLAlchemy(DataBase):
         session.close()
         return shopper
 
-    def get_shoppers(self) -> Shopper:
+    def get_shoppers(self) -> list:
         session = Session(self.engine)
         shoppers = session.query(Shopper).all()
         session.close()
